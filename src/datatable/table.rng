@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <!-- START ELEMENT -->
+  <start>
+    <ref name="table:table"/>
+  </start>
+
+  <!-- CUSTOM ADDITIONS -->
+  <define name="custom-table-content">
+    <optional>
+      <ref name="table-table-columns"/>
+    </optional>
+    <ref name="table-table-rows" />
+  </define>
+  <define name="custom-table-cell-content">
+    <text />
+  </define>
+
+<!-- ODF 1.2 Table
+
+  Everything below is taken from ODF 1.2: http://docs.oasis-open.org/office/v1.2/os/OpenDocument-v1.2-os-schema.rng
+  We commented out everything we do not support.
+-->
+  <define name="table-table">
+    <element name="table:table">
+      <ref name="table-table-attlist"/>
+      <optional>
+        <ref name="table-title"/>
+      </optional>
+<!--
+      <optional>
+        <ref name="table-desc"/>
+      </optional>
+      <optional>
+        <ref name="table-table-source"/>
+      </optional>
+      <optional>
+        <ref name="office-dde-source"/>
+      </optional>
+      <optional>
+        <ref name="table-scenario"/>
+      </optional>
+      <optional>
+        <ref name="office-forms"/>
+      </optional>
+      <optional>
+        <ref name="table-shapes"/>
+      </optional>
+  -->
+<!-- Custom
+      <ref name="table-columns-and-groups"/>
+      <ref name="table-rows-and-groups"/>
+-->
+      <ref name="custom-table-content"/>
+<!--
+      <optional>
+        <ref name="table-named-expressions"/>
+      </optional>
+ -->
+    </element>
+  </define>
+<!--
+  <define name="table-columns-and-groups">
+    <oneOrMore>
+      <choice>
+        <ref name="table-table-column-group"/>
+        <ref name="table-columns-no-group"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="table-columns-no-group">
+    <choice>
+      <group>
+        <ref name="table-columns"/>
+        <optional>
+          <ref name="table-table-header-columns"/>
+          <optional>
+            <ref name="table-columns"/>
+          </optional>
+        </optional>
+      </group>
+      <group>
+        <ref name="table-table-header-columns"/>
+        <optional>
+          <ref name="table-columns"/>
+        </optional>
+      </group>
+    </choice>
+  </define>
+  <define name="table-columns">
+    <choice>
+      <ref name="table-table-columns"/>
+      <oneOrMore>
+        <ref name="table-table-column"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="table-rows-and-groups">
+    <oneOrMore>
+      <choice>
+        <ref name="table-table-row-group"/>
+        <ref name="table-rows-no-group"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="table-rows-no-group">
+    <choice>
+      <group>
+        <ref name="table-rows"/>
+        <optional>
+          <ref name="table-table-header-rows"/>
+          <optional>
+            <ref name="table-rows"/>
+          </optional>
+        </optional>
+      </group>
+      <group>
+        <ref name="table-table-header-rows"/>
+        <optional>
+          <ref name="table-rows"/>
+        </optional>
+      </group>
+    </choice>
+  </define>
+  <define name="table-rows">
+    <choice>
+      <ref name="table-table-rows"/>
+      <oneOrMore>
+        <optional>
+          <ref name="text-soft-page-break"/>
+        </optional>
+        <ref name="table-table-row"/>
+      </oneOrMore>
+    </choice>
+  </define>
+ -->
+  <define name="table-table-attlist">
+    <interleave>
+      <optional>
+        <attribute name="table:name">
+          <ref name="string"/>
+        </attribute>
+      </optional>
+<!--
+      <optional>
+        <attribute name="table:style-name">
+          <ref name="styleNameRef"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:template-name">
+          <ref name="string"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:use-first-row-styles">
+          <ref name="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:use-last-row-styles">
+          <ref name="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:use-first-column-styles">
+          <ref name="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:use-last-column-styles">
+          <ref name="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:use-banding-rows-styles">
+          <ref name="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:use-banding-columns-styles">
+          <ref name="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:protected">
+          <ref name="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:protection-key">
+          <ref name="string"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:protection-key-digest-algorithm">
+          <ref name="anyIRI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:print">
+          <ref name="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:print-ranges">
+          <ref name="cellRangeAddressList"/>
+        </attribute>
+      </optional>
+-->
+      <optional>
+        <ref name="xml-id"/>
+      </optional>
+<!--
+      <optional>
+        <attribute name="table:is-sub-table">
+          <ref name="boolean"/>
+        </attribute>
+      </optional>
+-->
+    </interleave>
+  </define>
+  <define name="table-title">
+    <element name="table:title">
+      <text/>
+    </element>
+  </define>
+<!--
+  <define name="table-desc">
+    <element name="table:desc">
+      <text/>
+    </element>
+  </define>
+-->
+  <define name="table-table-row">
+    <element name="table:table-row">
+      <ref name="table-table-row-attlist"/>
+      <oneOrMore>
+        <choice>
+          <ref name="table-table-cell"/>
+          <ref name="table-covered-table-cell"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="table-table-row-attlist">
+    <interleave>
+<!--
+      <optional>
+        <attribute name="table:number-rows-repeated">
+          <ref name="positiveInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:style-name">
+          <ref name="styleNameRef"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:default-cell-style-name">
+          <ref name="styleNameRef"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:visibility">
+          <ref name="table-visibility-value"/>
+        </attribute>
+      </optional>
+-->
+      <optional>
+        <ref name="xml-id"/>
+      </optional>
+    </interleave>
+  </define>
+<!--
+  <define name="table-visibility-value">
+    <choice>
+      <value>visible</value>
+      <value>collapse</value>
+      <value>filter</value>
+    </choice>
+  </define>
+-->
+  <define name="table-table-cell">
+    <element name="table:table-cell">
+      <ref name="table-table-cell-attlist"/>
+      <ref name="table-table-cell-attlist-extra"/>
+<!-- Custom
+      <ref name="table-table-cell-content"/>
+-->
+      <ref name="custom-table-cell-content"/>
+    </element>
+  </define>
+<!-- TODO: what is <table-covered-table-cell> for actually?
+  <define name="table-covered-table-cell">
+    <element name="table:covered-table-cell">
+      <ref name="table-table-cell-attlist"/>
+      <ref name="table-table-cell-content"/>
+    </element>
+  </define>
+  <define name="table-table-cell-content">
+    <optional>
+      <ref name="table-cell-range-source"/>
+    </optional>
+    <optional>
+      <ref name="office-annotation"/>
+    </optional>
+    <optional>
+      <ref name="table-detective"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="text-content"/>
+    </zeroOrMore>
+  </define>
+-->
+  <define name="table-table-cell-attlist">
+    <interleave>
+<!--
+      <optional>
+        <attribute name="table:number-columns-repeated">
+          <ref name="positiveInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:style-name">
+          <ref name="styleNameRef"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:content-validation-name">
+          <ref name="string"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:formula">
+          <ref name="string"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="common-value-and-type-attlist"/>
+      </optional>
+      <optional>
+        <attribute name="table:protect">
+          <ref name="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:protected">
+          <ref name="boolean"/>
+        </attribute>
+      </optional>
+-->
+      <optional>
+        <ref name="xml-id"/>
+      </optional>
+<!--
+      <optional>
+        <ref name="common-in-content-meta-attlist"/>
+      </optional>
+-->
+    </interleave>
+  </define>
+  <define name="table-table-cell-attlist-extra">
+<!--
+    <interleave>
+      <optional>
+        <attribute name="table:number-columns-spanned">
+          <ref name="positiveInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:number-rows-spanned">
+          <ref name="positiveInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:number-matrix-columns-spanned">
+          <ref name="positiveInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:number-matrix-rows-spanned">
+          <ref name="positiveInteger"/>
+        </attribute>
+      </optional>
+    </interleave>
+-->
+  </define>
+  <define name="table-table-column">
+    <element name="table:table-column">
+      <ref name="table-table-column-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="table-table-column-attlist">
+    <interleave>
+<!--
+      <optional>
+        <attribute name="table:number-columns-repeated">
+          <ref name="positiveInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:style-name">
+          <ref name="styleNameRef"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:visibility">
+          <ref name="table-visibility-value"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="table:default-cell-style-name">
+          <ref name="styleNameRef"/>
+        </attribute>
+      </optional>
+-->
+      <optional>
+        <ref name="xml-id"/>
+      </optional>
+    </interleave>
+  </define>
+<!--
+  <define name="table-table-header-columns">
+    <element name="table:table-header-columns">
+      <oneOrMore>
+        <ref name="table-table-column"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="table-table-columns">
+    <element name="table:table-columns">
+      <oneOrMore>
+        <ref name="table-table-column"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="table-table-column-group">
+    <element name="table:table-column-group">
+      <ref name="table-table-column-group-attlist"/>
+      <ref name="table-columns-and-groups"/>
+    </element>
+  </define>
+  <define name="table-table-column-group-attlist">
+    <optional>
+      <attribute name="table:display">
+        <ref name="boolean"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="table-table-header-rows">
+    <element name="table:table-header-rows">
+      <oneOrMore>
+        <optional>
+          <ref name="text-soft-page-break"/>
+        </optional>
+        <ref name="table-table-row"/>
+      </oneOrMore>
+    </element>
+  </define>
+-->
+  <define name="table-table-rows">
+    <element name="table:table-rows">
+      <oneOrMore>
+<!--
+        <optional>
+          <ref name="text-soft-page-break"/>
+        </optional>
+ -->
+        <ref name="table-table-row"/>
+      </oneOrMore>
+    </element>
+  </define>
+<!--
+  <define name="table-table-row-group">
+    <element name="table:table-row-group">
+      <ref name="table-table-row-group-attlist"/>
+      <ref name="table-rows-and-groups"/>
+    </element>
+  </define>
+  <define name="table-table-row-group-attlist">
+    <optional>
+      <attribute name="table:display">
+        <ref name="boolean"/>
+      </attribute>
+    </optional>
+  </define>
+ -->
+</grammar>
